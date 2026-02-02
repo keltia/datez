@@ -33,7 +33,7 @@ usage
 
     datez <time> <zone>...
 
-You should wite the time in ISO 8601 / RFC 3339 format but _without_ a
+You should write the time in ISO 8601 / RFC 3339 format but _without_ a
 UTC offset, and list as many tz database timezone names as you want.
 
 The time is read using the first timezone; it is converted to UTC and
@@ -41,13 +41,10 @@ printed in UTC and in every timezone you listed, and in your local
 timezone (if possible).
 
 The local timezone is discovered from the `TZ` environment variable
-if that is set, or by an OS-specific mechanism; it isn't an error
-if neither of those work, but you have to list your timezone
-explicitly.
-
-On Unix, `datez` reads the symlink at `/etc/localtime`.
-
-On Windows, `datez` calls Win32 `GetTimeZoneInformation()`.
+if that is set, or by Jiff's cross-platform time zone discovery; it
+isn't an error if discovery fails, but you have to list your timezone
+explicitly. If the system timezone doesn't have a stable IANA name,
+`datez` prints it as `Local`.
 
 
 licence

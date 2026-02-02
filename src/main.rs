@@ -119,9 +119,14 @@ fn main() -> Result<()> {
         bail!("usage: datez <datetime> <tz>...");
     }
     let time = get_time(&args[1], &args[2], &parse_tz(&args[2])?)?;
+    let mut dedup = HashMap::new();
     print_time(&time, "UTC")?;
+    dedup.insert("UTC".to_string(), ());
     for arg in args[2..].iter() {
-        print_time(&time, arg)?;
+        if !dedup.contains_key(arg) {
+            print_time(&time, arg)?;
+            dedup.insert(arg.to_string(), ());
+        }
     }
     if let Some(zone) = local_tz {
         print_time_tz(&time, &tz_name(&zone), &zone)?;

@@ -24,6 +24,7 @@ use anyhow::{anyhow, bail, Result};
 use jiff::{
     civil::DateTime as CivilDateTime, fmt::strtime, tz::TimeZone, Timestamp,
 };
+use std::collections::HashMap;
 use std::ffi::OsStr;
 
 /// Try several formats for parsing time
@@ -76,7 +77,7 @@ fn get_time(time: &str, zone: &str, tz: &TimeZone) -> Result<Timestamp> {
 /// Prints the specified time with its plain text timezone
 ///
 fn print_time_tz(time: &Timestamp, zone: &str, tz: &TimeZone) -> Result<()> {
-    let time = time.to_zoned(tz.clone());
+    let time = time.to_zoned_datetime(tz.clone());
     println!("{} ({})", time.strftime("%F.%T%z"), zone);
     Ok(())
 }
@@ -111,7 +112,7 @@ fn main() -> Result<()> {
     if let Some(zone) = &local_tz {
         if args.len() == 1 {
             let now = Timestamp::now();
-            let now = now.to_zoned(zone.clone());
+            let now = now.to_zoned_datetime(zone.clone());
             args.push(now.strftime("%F.%T").to_string());
         }
     }

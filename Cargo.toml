@@ -15,4 +15,4 @@ anyhow = "~1"
 jiff = "0.2"
 
 [dev-dependencies]
-rstest = "0.11.0"
+rstest = "0.28.0"
